@@ -11,12 +11,14 @@ public class Order {
         BUY, SELL
     }
 
-    private final String id;
-    private final String symbol;
-    private final Side side;
-    private final double price;
-    private final int quantity;
-    private final long timestamp;
+    private String id;
+    private String symbol;
+    private Side side;
+    private double price;
+    private int quantity;
+    private long timestamp;
+
+    public Order() {}
 
     public Order(String id, String symbol, Side side, double price, int quantity, long timestamp) {
         this.id = id;
@@ -27,12 +29,18 @@ public class Order {
         this.timestamp = timestamp;
     }
 
-    public Order withUpdatedQuantity(int newQuantity) {
-        return new Order(this.id, this.symbol, this.side, this.price, newQuantity, this.timestamp);
+    // Recycle Order Object
+    public void reset(String id, String symbol, Side side, double price, int quantity, long timestamp) {
+        this.id = id;
+        this.symbol = symbol;
+        this.side = side;
+        this.price = price;
+        this.quantity = quantity;
+        this.timestamp = timestamp;
     }
 
-    public Order withUpdatedOrder(String id, String symbol, Side side, double price, int quantity, long timestamp) {
-        return new Order(id, symbol, side, price, quantity, timestamp);
+    // Recycle Order Object by overwriting qty
+    public void resetQuantity(int newQuantity) {
+        this.quantity = newQuantity;
     }
 }
-

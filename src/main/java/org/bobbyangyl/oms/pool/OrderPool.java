@@ -11,7 +11,7 @@ public class OrderPool {
 
     public Order acquire() {
         Order order = pool.poll();
-        return (order != null) ? order : new Order("", "", Order.Side.BUY, 0.0, 0, 0L);
+        return (order != null) ? order : new Order();
     }
 
     public void release(Order order) {

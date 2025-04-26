@@ -1,0 +1,20 @@
+package org.bobbyangyl.oms.pool;
+
+import org.bobbyangyl.oms.model.Order;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+public class OrderPool {
+
+    private final Queue<Order> pool = new ConcurrentLinkedQueue<>();
+
+    public Order acquire() {
+        Order order = pool.poll();
+        return (order != null) ? order : new Order("", "", Order.Side.BUY, 0.0, 0, 0L);
+    }
+
+    public void release(Order order) {
+        pool.offer(order);
+    }
+}

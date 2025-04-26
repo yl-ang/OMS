@@ -5,10 +5,7 @@ import org.bobbyangyl.oms.model.Order;
 import org.bobbyangyl.oms.pool.OrderPool;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Queue;
-import java.util.TreeMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -97,7 +94,8 @@ public class MatchingEngine {
             TreeMap<Double, Queue<Order>> orderBook =
                     sameTypeOrders.computeIfAbsent(order.getSymbol(), k -> new TreeMap<>());
 
-            orderBook.computeIfAbsent(order.getPrice(), k -> new LinkedList<>()).offer(order);
+            // Dequeue create contiguous object array, LL creates nodes in heap..
+            orderBook.computeIfAbsent(order.getPrice(), k -> new ArrayDeque<>()).offer(order);
         }
     }
 }
